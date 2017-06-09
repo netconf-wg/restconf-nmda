@@ -106,72 +106,41 @@
       </section>
 
       <section title="Conformance">
-        <t>A RESTCONF server identifies that it supports NMDA by supporting
-        the new top-level resource {+restconf}/datastores.  Clients MAY test
-        if a server supports NMDA using either the HEAD or GET methods on 
-        this resource.</t>
+        <t>A RESTCONF server identifies that it supports NMDA both by
+        supporting the &lt;operational&gt; datastore, as well as by
+        supporting the "ietf-server-metainfo" module, defined in
+        <xref target="I-D.ietf-netmod-revised-datastores"/>.</t>
+        <t>RESTCONF clients MAY test if a server supports NMDA using
+        the HEAD method on the &lt;operational&gt; datastore's 
+        resource, described later in this document.</t>
+        <t>Alternatively, RESTCONF clients MAY test if a server
+        supports the NMDA using either the HEAD or GET methods on
+        'ietf-server-metainfo:server-metainfo' resource, under either 
+        {+restconf}/data or &lt;operational&gt;, though only the 
+        latter resource SHOULD be used so that the client doesn't
+        need to have any use of the {+restconf}/data resource.</t>
       </section>
 
-      <section title="The {+restconf}/datastores Resource">
-
-        <t>The top-level resource 'datastores' is used to both return a list
-        of datastores supported by the server, as well as to act as a mount
-        point for those datastores.</t>
-
-        <section title="As a Listing of Supported Datastores">
-          <t>A client MAY discover which datastores a server supports by querying
-          the 'datastores' resource.  The data model for this resource is described
-          in <xref target="datastores-yang"/>.  Note, 'datastores' is not prefixed
-          by a module name because it is considered a native top-level resource in
-          this context.
-            <figure>
-              <artwork><![CDATA[
-          GET {+restconf}/datastores HTTP/1.1
-          Accept application/yang-data+xml
-]]></artwork>
-            </figure>
-          </t>
-          <t>For example, the following shows the response for a server supporting
-          &lt;unified&gt;, &lt;intended&gt;, &lt;operational&gt;, and a dynamic
-          datastore called "ds-ephemeral".  Note here that the datastore values
-          are identityrefs, and hence are scoped to the namespace of the module
-          that defined the identity.
-            <figure>
-              <artwork><![CDATA[
-     <datastores xmlns="urn:ietf:params:xml:ns:yang:ietf-restconf
-                 xmlns:ds="urn:ietf:params:xml:ns:yang:ietf-datastores">
-       <datastore>ds:unified</legacy>
-       <datastore>ds:intended</datastore>
-       <datastore>ds:operational</datastore>
-       <datastore xmlns="urn:example:ds-ephemeral">ds-ephemeral</datastore>
-     </datastores>
-]]></artwork>
-            </figure>
-          </t>
-        </section>
-
-        <section title="As a Mount Point for Datastores">
-          <t>Knowing which datastores a server supports, a client MAY interact with
-          specific datastores using the resource path:
-            <figure>
-              <artwork><![CDATA[
-  {+restconf}/datastores/<datastore>
-]]></artwork>
-            </figure>
-          </t>
-          <t>For datastores not defined in the "ietf-datastores" module, the datastore
-          name MUST be prefixed by the module name it is defined in.  For instance, the
-          resource locations for the datastores listed above are:
+      <section title="The {+restconf}/datastores/&lt;datastore&gt; Resource">
+        <t>Knowing which datastores a server supports, from querying the
+        ietf-server-metainfo module, a RESTCONF client interacts with
+        specific datastores using the resource path template:
           <figure>
             <artwork><![CDATA[
-  {+restconf}/datastores/unified
-  {+restconf}/datastores/intended
-  {+restconf}/datastores/operational
+  {+restconf}/datastores/<datastore>
+]]></artwork>
+          </figure>
+        </t>
+        <t>Where &lt;datastore&gt; is encoded as an identity.  For instance:
+          <figure>
+            <artwork><![CDATA[
+  {+restconf}/datastores/ietf-datastores:running
+  {+restconf}/datastores/ietf-datastore:intended
+  {+restconf}/datastores/ietf-datastore:operational
   {+restconf}/datastores/example-ds-ephemeral:ds-ephemeral
 ]]></artwork>
           </figure>
         </t>
-        </section>
       </section>
 
       <section title="Protocol Operations">
@@ -184,24 +153,8 @@
             <t>Dynamic datastores are excluded, as each dynamic datastore
             definition needs to be reviewed for what protocol operations
             it supports.</t>
+            <t>RFC 8040, Section 3.5.4, Paragraph 3 is stricken.</t>
           </list>
-        </t>
-
-        <t>DISCUSS: New protocol operations...commit, confirm, save?</t>
-      </section>
-
-      <section title="The 'ietf-restconf-nmda' Module" anchor="datastores-yang">
-        <t>
-          <figure>
-            <artwork><![CDATA[
-
-<CODE BEGINS> file "ietf-restconf-nmda@YYYY-MM-DD.yang"
-
-INSERT_TEXT_FROM_FILE(ietf-restconf-nmda@YYYY-MM-DD.yang)
-
-<CODE ENDS>
-]]></artwork>
-          </figure>
         </t>
       </section>
 
