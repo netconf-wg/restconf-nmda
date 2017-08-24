@@ -1,0 +1,110 @@
+This document updates RESTCONF ^RFC8040^ in order to support the
+Network Management Datastore Architecture (NMDA) defined in
+^I-D.ietf-netmod-revised-datastores^.
+
+* Introduction
+
+This document updates RESTCONF ^RFC8040^ in order to support the
+Network Management Datastore Architecture (NMDA) defined in
+^I-D.ietf-netmod-revised-datastores^.
+
+The solution presented in this document is backwards compatible with
+^RFC8040^.  This is achieved by it only adding new top-level
+resources, and thereby leaving the semantics of all existing
+resources alone.
+
+* Requirements Language
+
+The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+"SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
+"OPTIONAL" in this document are to be interpreted as described in BCP
+14 ^RFC2119^ ^RFC8174^ when, and only when, they appear in all
+capitals, as shown here.
+
+* Summary of Updates to RFC 8040
+
+This document updates ^RFC8040^ in the following ways:
+
+- Adds new top-level resource "/ds".
+- Adds new query parameter "with-origin".
+- Section 3.5.4, Paragraph 3 doesn't apply for <operational>.
+
+* Conformance
+
+A RESTCONF server identifies that it supports NMDA both by supporting
+the <operational> datastore, as well as by supporting at least
+revision YANG_LIBRARY_REVISION of the "ietf-yang-library" module, as
+specified in ^I-D.nmdsdt-netconf-rfc7895bis^.
+
+RESTCONF clients MAY test if a server supports NMDA using the HEAD
+method on the <operational> datastore resource, described later in
+this document.
+
+RESTCONF clients MAY also test if a server supports the NMDA using
+either the HEAD or GET methods on "ietf-yang-library:yang-library"
+resource, under either {+restconf}/data or <operational>, though only
+the latter resource SHOULD be used so that the client doesn't need to
+have any ongoing need to use the {+restconf}/data resource.
+
+RESTCONF clients MAY also test if a server supports the NMDA by
+checking the revision number for the "ietf-yang-library" module
+listed under "ietf-yang-library:modules-state", under either
+{+restconf}/data or <operational>.  This approach might be preferred
+by some existing clients, but new clients should avoid using the
+deprecated "modules-state" resource.
+
+* The {+restconf}/ds/<datastore> Resource
+
+Knowing which datastores a server supports, from querying the ietf-
+yang-library module, a RESTCONF client interacts with specific
+datastores using the resource path template:
+
+  {+restconf}/ds/<datastore>
+
+Where <datastore> is encoded as an "identity".  For instance:
+
+  {+restconf}/ds/ietf-datastores:running
+  {+restconf}/ds/ietf-datastores:intended
+  {+restconf}/ds/ietf-datastores:operational
+  {+restconf}/ds/example-ds-ephemeral:ds-ephemeral
+
+* Protocol Operations
+
+All existing protocol operations defined in ^RFC8040^ for the
+{+restconf}/data resource are available for all of the new datastore
+resources with the following exceptions:
+
+- Dynamic datastores are excluded, as each dynamic datastore
+  definition needs to be reviewed for what protocol operations it
+  supports.
+- Some datastores are read-only by nature (e.g., <intended>), and
+  hence any attempt to modify these datastores will fail.
+- RFC 8040, Section 3.5.4, Paragraph 3 does not apply when
+  interacting with <operational>.
+- New boolean query parameter "with-origin" (default: false) is
+  defined to request the "origin" attributes when querying
+  <operational>.
+
+*  Security Considerations
+
+TBD
+
+*  IANA Considerations
+
+TBD
+
+
+{{document:
+    name ;
+    ipr trust200902;
+    category std;
+    references references.xml;
+    updates 8040;
+    title "RESTCONF Update to Support the NMDA";
+    contributor "author:Martin Bjorklund:Tail-f Systems:mbj@tail-f.com";
+    contributor "author:Juergen Schoenwaelder:Jacobs University:j.schoenwaelder@jacobs-university.de";
+    contributor "author:Phil Shafer:Juniper Networks:phil@juniper.net";
+    contributor "author:Kent Watsen:Juniper Networks:kwatsen@juniper.net";
+    contributor "author:Robert Wilton:Cisco Systems:rwilton@cisco.com";
+}}
+
