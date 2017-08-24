@@ -2,7 +2,7 @@
 # https://pypi.python.org/pypi/xml2rfc
 # https://github.com/Juniper/libslax/tree/master/doc/oxtradoc
 
-output_base = draft-ietf-netconf-restconf-nmda
+output_base = draft-ietf-netconf-nmda-restconf
 draft = $(output_base).org
 examples =
 trees =
