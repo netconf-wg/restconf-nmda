@@ -28,12 +28,17 @@ This document updates ^RFC8040^ in the following ways:
 - Adds new top-level resource "/ds".
 - Adds new query parameter "with-origin".
 - Section 3.5.4, Paragraph 3 doesn't apply for <operational>.
+- Updates section 10 by requiring servers that support NMDA to
+  implement "ietf-yang-library" as defined in
+  ^I-D.nmdsdt-netconf-rfc7895bis^.
 
 * Conformance
 
+RFC Ed.: Update 201X-XX-XX below with correct date.
+
 A RESTCONF server identifies that it supports NMDA both by supporting
 the <operational> datastore, as well as by supporting at least
-revision YANG_LIBRARY_REVISION of the "ietf-yang-library" module, as
+revision 201X-XX-XX of the "ietf-yang-library" module, as
 specified in ^I-D.nmdsdt-netconf-rfc7895bis^.
 
 RESTCONF clients MAY test if a server supports NMDA using the HEAD
@@ -85,11 +90,11 @@ resources with the following exceptions:
   defined to request the "origin" attributes when querying
   <operational>.
 
-*  Security Considerations
+* Security Considerations
 
 TBD
 
-*  IANA Considerations
+* IANA Considerations
 
 TBD
 
