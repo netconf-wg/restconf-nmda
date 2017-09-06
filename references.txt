@@ -1,6 +1,7 @@
 {{references:
     title "Normative References";
     ietf-ref RFC2119;
+    ietf-ref RFC7951;
     ietf-ref RFC8040;
     ietf-ref RFC8174;
     ietf-ref I-D.ietf-netmod-revised-datastores;

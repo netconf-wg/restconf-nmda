@@ -13,7 +13,7 @@ The solution presented in this document is backwards compatible with
 resources, and thereby leaving the semantics of all existing
 resources alone.
 
-* Requirements Language
+** Terminology
 
 The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
 "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
@@ -21,13 +21,21 @@ The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
 14 ^RFC2119^ ^RFC8174^ when, and only when, they appear in all
 capitals, as shown here.
 
+The following terms are defined in
+^I-D.ietf-netmod-revised-datastores^ and are not redefined here:
+
+- operational state datastore
+- running configuration datastore
+- intended configuration datastore
+
 * Summary of Updates to RFC 8040
 
 This document updates ^RFC8040^ in the following ways:
 
 - Adds new top-level resource "/ds".
 - Adds new query parameter "with-origin".
-- Section 3.5.4, Paragraph 3 doesn't apply for <operational>.
+- Section 3.5.4, Paragraph 3 doesn't apply for the new resource
+  {+restconf}/ds/ietf-datastores:operational.
 - Updates section 10 by requiring servers that support NMDA to
   implement "ietf-yang-library" as defined in
   ^I-D.nmdsdt-netconf-rfc7895bis^.
@@ -36,42 +44,59 @@ This document updates ^RFC8040^ in the following ways:
 
 RFC Ed.: Update 201X-XX-XX below with correct date.
 
-A RESTCONF server identifies that it supports NMDA both by supporting
-the <operational> datastore, as well as by supporting at least
-revision 201X-XX-XX of the "ietf-yang-library" module, as
-specified in ^I-D.nmdsdt-netconf-rfc7895bis^.
+An NMDA-compliant RESTCONF server MUST support the operational state
+datastore.  Such a server identifies that it supports NMDA both by
+implementing the {+restconf}/ds/ietf-datastores:operational resource,
+and by implementing at least revision 201X-XX-XX of the
+"ietf-yang-library" module, as specified in
+^I-D.nmdsdt-netconf-rfc7895bis^.
 
 RESTCONF clients MAY test if a server supports NMDA using the HEAD
-method on the <operational> datastore resource, described later in
-this document.
+method on the {+restconf}/ds/ietf-datastores:operational resource.
 
 RESTCONF clients MAY also test if a server supports the NMDA using
 either the HEAD or GET methods on "ietf-yang-library:yang-library"
-resource, under either {+restconf}/data or <operational>, though only
-the latter resource SHOULD be used so that the client doesn't need to
-have any ongoing need to use the {+restconf}/data resource.
+resource, under either {+restconf}/data or
+{+restconf}/ds/ietf-datastores:operational, though only the latter
+resource SHOULD be used so that the client doesn't need to have any
+ongoing need to use the {+restconf}/data resource.
 
 RESTCONF clients MAY also test if a server supports the NMDA by
-checking the revision number for the "ietf-yang-library" module
-listed under "ietf-yang-library:modules-state", under either
-{+restconf}/data or <operational>.  This approach might be preferred
-by some existing clients, but new clients should avoid using the
-deprecated "modules-state" resource.
+checking the revision number for the "ietf-yang-library" module listed
+under "ietf-yang-library:modules-state", under either {+restconf}/data
+or {+restconf}/ds/ietf-datastores:operational.  This approach might be
+preferred by some existing clients, but new clients should avoid using
+the deprecated "modules-state" resource.
 
-* The {+restconf}/ds/<datastore> Resource
+* The {+restconf}/ds/<datastore> Resources
 
-Knowing which datastores a server supports, from querying the ietf-
-yang-library module, a RESTCONF client interacts with specific
-datastores using the resource path template:
+This document defines a set of new resources representing datastores
+as defined in ^I-D.ietf-netmod-revised-datastores^.  These
+resources are available using the resource path template:
 
   {+restconf}/ds/<datastore>
 
-Where <datastore> is encoded as an "identity".  For instance:
+Where <datastore> is encoded as an "identity" according to the JSON
+encoding rules for identities, defined in Section 4 of ^RFC7951^.
+Such an identity MUST be derived from the "datastore" identity in
+"ietf-datastores" ^I-D.ietf-netmod-revised-datastores^.
 
-  {+restconf}/ds/ietf-datastores:running
-  {+restconf}/ds/ietf-datastores:intended
-  {+restconf}/ds/ietf-datastores:operational
-  {+restconf}/ds/example-ds-ephemeral:ds-ephemeral
+Specifically:
+
+- The resource {+restconf}/ds/ietf-datastores:operational
+  refers to the operational state datastore.
+- The resource {+restconf}/ds/ietf-datastores:running refers to the
+  running configuration datastore.
+- The resource {+restconf}/ds/ietf-datastores:intended refers to the
+  intended configuration datastore.
+
+An NMDA-compliant server MUST implement
+{+restconf}/ds/ietf-datastores:operational.  Other datastore resources
+are optional to implement.
+
+If a server implements the example datastore "ds-ephemeral" in
+the module "example-ds-ephemeral", it would implement the resource
+{+restconf}/ds/example-ds-ephemeral:ds-ephemeral.
 
 * Protocol Operations
 
@@ -82,13 +107,32 @@ resources with the following exceptions:
 - Dynamic datastores are excluded, as each dynamic datastore
   definition needs to be reviewed for what protocol operations it
   supports.
+
 - Some datastores are read-only by nature (e.g., <intended>), and
   hence any attempt to modify these datastores will fail.
-- RFC 8040, Section 3.5.4, Paragraph 3 does not apply when
-  interacting with <operational>.
-- New boolean query parameter "with-origin" (default: false) is
-  defined to request the "origin" attributes when querying
-  <operational>.
+
+- RFC 8040, Section 3.5.4, Paragraph 3 does not apply when interacting
+  with {+restconf}/ds/ietf-datastores:operational.  This means that
+  all values are always returned from the operational state datastore,
+  even if a node happens to have a default statement in the YANG
+  module, and this default value is being used by the server.  If the
+  "with-defaults" query parameter is present in a request to this
+  resource, the server MUST return a response with a "400 Bad Request"
+  status-line.  The error-tag value "invalid-value" is used in this
+  case.
+
+** The "with-origin" query parameter
+
+The "with-origin" query parameter is used to request the "origin"
+attributes when querying {+restconf}/ds/ietf-datastores:operational.
+
+The value of the "with-origin" parameter is either "true" or "false".
+The default value is "false".
+
+The "with-origin" query parameter is optional to support.  It is
+identified with the URI:
+
+  urn:ietf:params:restconf:capability:with-origin:1.0
 
 * Security Considerations
 
@@ -96,7 +140,20 @@ TBD
 
 * IANA Considerations
 
+This document defines one capability in the "RESTCONF Capability URNs"
+registry defined in ^RFC8040^:
+
+  Index          Capability Identifier
+  ------------------------------------------------------------------
+
+  :with-origin   urn:ietf:params:restconf:capability:with-origin:1.0
+
+*! start-appendix
+
+* Example
+
 TBD
+
 
 
 {{document:
