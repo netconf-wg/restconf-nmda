@@ -51,22 +51,9 @@ and by implementing at least revision 201X-XX-XX of the
 "ietf-yang-library" module, as specified in
 ^I-D.nmdsdt-netconf-rfc7895bis^.
 
-RESTCONF clients MAY test if a server supports NMDA using the HEAD
-method on the {+restconf}/ds/ietf-datastores:operational resource.
-
-RESTCONF clients MAY also test if a server supports the NMDA using
-either the HEAD or GET methods on "ietf-yang-library:yang-library"
-resource, under either {+restconf}/data or
-{+restconf}/ds/ietf-datastores:operational, though only the latter
-resource SHOULD be used so that the client doesn't need to have any
-ongoing need to use the {+restconf}/data resource.
-
-RESTCONF clients MAY also test if a server supports the NMDA by
-checking the revision number for the "ietf-yang-library" module listed
-under "ietf-yang-library:modules-state", under either {+restconf}/data
-or {+restconf}/ds/ietf-datastores:operational.  This approach might be
-preferred by some existing clients, but new clients should avoid using
-the deprecated "modules-state" resource.
+A RESTCONF client can test if a server supports the NMDA by using
+either the HEAD or GET methods on
+{+restconf}/ds/ietf-datastores:operational.
 
 * The {+restconf}/ds/<datastore> Resources
 
