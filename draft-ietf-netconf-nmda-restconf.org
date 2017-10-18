@@ -34,9 +34,9 @@ This document updates ^RFC8040^ in the following ways:
 
 - Adds new top-level resource "/ds".
 - Adds new query parameter "with-origin".
-- Section 3.5.4, Paragraph 3 doesn't apply for the new resource
+- Section 3.5.4, Paragraph 3 in ^RFC8040^ doesn't apply for the new resource
   {+restconf}/ds/ietf-datastores:operational.
-- Updates section 10 by requiring servers that support NMDA to
+- Updates section 10 in ^RFC8040^ by requiring servers that support NMDA to
   implement "ietf-yang-library" as defined in
   ^I-D.nmdsdt-netconf-rfc7895bis^.
 
@@ -111,7 +111,8 @@ resources with the following exceptions:
 ** The "with-origin" query parameter
 
 The "with-origin" query parameter is used to request the "origin"
-attributes when querying {+restconf}/ds/ietf-datastores:operational.
+attributes (^I-D.ietf-netmod-revised-datastores^) when querying
+{+restconf}/ds/ietf-datastores:operational.
 
 The value of the "with-origin" parameter is either "true" or "false".
 The default value is "false".
