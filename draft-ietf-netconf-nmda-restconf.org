@@ -34,8 +34,8 @@ This document updates ^RFC8040^ in the following ways:
 
 - Adds new top-level resource "/ds".
 - Adds new query parameter "with-origin".
-- Section 3.5.4, Paragraph 3 in ^RFC8040^ doesn't apply for the new resource
-  {+restconf}/ds/ietf-datastores:operational.
+- Section 3.5.4, Paragraph 3 in ^RFC8040^ doesn't apply when
+  interacting with any resource under {+restconf}/ds.
 - Updates section 10 in ^RFC8040^ by requiring servers that support NMDA to
   implement "ietf-yang-library" as defined in
   ^I-D.nmdsdt-netconf-rfc7895bis^.
@@ -98,7 +98,7 @@ resources with the following exceptions:
 - Some datastores are read-only by nature (e.g., <intended>), and
   hence any attempt to modify these datastores will fail.
 
-- The "with-defaults" query parameter (RFC 8040, Section 4.8.9) does
+- The "with-defaults" query parameter (^RFC8040^, Section 4.8.9) does
   not apply when interacting with
   {+restconf}/ds/ietf-datastores:operational.  This means that all
   values are always returned from the operational state datastore,
@@ -109,9 +109,8 @@ resources with the following exceptions:
   status-line.  The error-tag value "invalid-value" is used in this
   case.
 
-- RFC 8040, Section 3.5.4, Paragraph 3 does not apply when interacting
-  with any datastore under {+restconf}/ds interacting with
-  {+restconf}/ds/ietf-datastores:operational.
+- ^RFC8040^, section 3.5.4, paragraph 3 does not apply when
+  interacting with any resource under {+restconf}/ds.
 
 ** The "with-origin" query parameter
 
