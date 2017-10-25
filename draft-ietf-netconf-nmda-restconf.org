@@ -98,24 +98,41 @@ resources with the following exceptions:
 - Some datastores are read-only by nature (e.g., <intended>), and
   hence any attempt to modify these datastores will fail.
 
-- RFC 8040, Section 3.5.4, Paragraph 3 does not apply when interacting
-  with {+restconf}/ds/ietf-datastores:operational.  This means that
-  all values are always returned from the operational state datastore,
+- The "with-defaults" query parameter (RFC 8040, Section 4.8.9) does
+  not apply when interacting with
+  {+restconf}/ds/ietf-datastores:operational.  This means that all
+  values are always returned from the operational state datastore,
   even if a node happens to have a default statement in the YANG
-  module, and this default value is being used by the server.  If the
+  module, and this default value is being used by the server. If the
   "with-defaults" query parameter is present in a request to this
   resource, the server MUST return a response with a "400 Bad Request"
   status-line.  The error-tag value "invalid-value" is used in this
   case.
 
+- RFC 8040, Section 3.5.4, Paragraph 3 does not apply when interacting
+  with any datastore under {+restconf}/ds interacting with
+  {+restconf}/ds/ietf-datastores:operational.
+
 ** The "with-origin" query parameter
 
-The "with-origin" query parameter is used to request the "origin"
-attributes (^I-D.ietf-netmod-revised-datastores^) when querying
-{+restconf}/ds/ietf-datastores:operational.
+The GET operation adds a new boolean query parameter named
+"with-origin", which if present and set to true, requests that the
+server includes "origin" metadata anotations in its response, as
+detailed in the NMDA.  This parameter is only valid when querying
+{+restconf}/ds/ietf-datastores:operational or any datastores with
+identities derived from the "operational" identity.  "origin" metadata
+annotations are not included unless a client explicitly requests them.
 
-The value of the "with-origin" parameter is either "true" or "false".
-The default value is "false".
+Data from <operational> can come from multiple sources.  The server
+should return the most accurate value for the "origin" metadata
+annotation as possible, indicating the source of the operational value,
+as specified in section 5.3.4 of the NMDA.
+
+When encoding the origin metadata annotation for a hierarchy of
+returned nodes, the annotation may be omitted for a child node when
+the value matches that of the parent node (as described in
+ietf-origin@2017-08-17). [RFC Editor, please check published revision
+date.]
 
 The "with-origin" query parameter is optional to support.  It is
 identified with the URI:
