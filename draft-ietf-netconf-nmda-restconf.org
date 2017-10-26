@@ -120,9 +120,9 @@ anotations in its response, as detailed in the NMDA.  This parameter
 is only valid when querying {+restconf}/ds/ietf-datastores:operational
 or any datastores with identities derived from the "operational"
 identity. Otherwise, if an invalid datastore is specified then the
-server MUST return a response witha a "400 Bad Request" status-line.
-"origin" metadata annotations are not included unless a client
-explicitly requests them.
+server MUST return a response witha a "400 Bad Request" status-line,
+using an error-tag value of "invalid-value".  "origin" metadata
+annotations are not included unless a client explicitly requests them.
 
 Data from <operational> can come from multiple sources.  The server
 should return the most accurate value for the "origin" metadata
