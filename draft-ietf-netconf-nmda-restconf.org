@@ -81,6 +81,9 @@ An NMDA-compliant server MUST implement
 {+restconf}/ds/ietf-datastores:operational.  Other datastore resources
 are optional to implement.
 
+YANG actions can only be invoked in
+{+restconf}/ds/ietf-datastores:operational.
+
 If a server implements the example datastore "ds-ephemeral" in
 the module "example-ds-ephemeral", it would implement the resource
 {+restconf}/ds/example-ds-ephemeral:ds-ephemeral.
