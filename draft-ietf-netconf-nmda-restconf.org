@@ -1,46 +1,38 @@
+#
+# NMDA Changes for RESTCONF
+#
+
+The Network Management Datastore Architecture defines datastores are a
+fundamental concept binding the data models written in the YANG data
+modeling language to network management protocols.  his document
+updates the RESTCONF protocol in order to support the Network
+Management Datastore Architecture.
+
 This document updates RESTCONF ^RFC8040^ in order to support the
 Network Management Datastore Architecture (NMDA) defined in
 ^I-D.ietf-netmod-revised-datastores^.
 
 * Introduction
 
-This document updates RESTCONF ^RFC8040^ in order to support the
-Network Management Datastore Architecture (NMDA) defined in
-^I-D.ietf-netmod-revised-datastores^.
+This document updates the RESTCONF protocol defined in ^RFC8040^ in
+order to support the Network Management Datastore Architecture (NMDA)
+defined in ^I-D.ietf-netmod-revised-datastores^.
 
 The solution presented in this document is backwards compatible with
 ^RFC8040^.  This is achieved by it only adding new top-level
-resources, and thereby leaving the semantics of all existing
-resources alone.
+resources, and thereby leaving the semantics of all existing resources
+alone.
 
-** Terminology
+This document uses the terminology defined by the NMDA
+^I-D.ietf-netmod-revised-datastores^.
 
-The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+The keywords "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
 "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
 "OPTIONAL" in this document are to be interpreted as described in BCP
-14 ^RFC2119^ ^RFC8174^ when, and only when, they appear in all
-capitals, as shown here.
+14, ^RFC2119^ ^RFC8174^ when, and only when, they appear in all capitals,
+as shown here.
 
-The following terms are defined in
-^I-D.ietf-netmod-revised-datastores^ and are not redefined here:
-
-- operational state datastore
-- running configuration datastore
-- intended configuration datastore
-
-* Summary of Updates to RFC 8040
-
-This document updates ^RFC8040^ in the following ways:
-
-- Adds new top-level resource "/ds".
-- Adds new query parameter "with-origin".
-- Section 3.5.4, Paragraph 3 in ^RFC8040^ doesn't apply when
-  interacting with any resource under {+restconf}/ds.
-- Updates section 10 in ^RFC8040^ by requiring servers that support NMDA to
-  implement "ietf-yang-library" as defined in
-  ^I-D.nmdsdt-netconf-rfc7895bis^.
-
-* Conformance
+* Datastore and YANG Library Requirements
 
 RFC Ed.: Update 201X-XX-XX below with correct date.
 
@@ -55,18 +47,19 @@ A RESTCONF client can test if a server supports the NMDA by using
 either the HEAD or GET methods on
 {+restconf}/ds/ietf-datastores:operational.
 
-* The {+restconf}/ds/<datastore> Resources
+* New Datastore Resources
 
 This document defines a set of new resources representing datastores
-as defined in ^I-D.ietf-netmod-revised-datastores^.  These
-resources are available using the resource path template:
+as defined in ^I-D.ietf-netmod-revised-datastores^.  These resources
+are available using the following resource path template:
 
   {+restconf}/ds/<datastore>
 
-Where <datastore> is encoded as an "identity" according to the JSON
-encoding rules for identities, defined in Section 4 of ^RFC7951^.
-Such an identity MUST be derived from the "datastore" identity in
-"ietf-datastores" ^I-D.ietf-netmod-revised-datastores^.
+The <datastore> path component is encoded as an "identity" according
+to the JSON encoding rules for identities, defined in Section 4 of
+^RFC7951^.  Such an identity MUST be derived from the "datastore"
+identity defined in the ietf-datastores YANG module
+^I-D.ietf-netmod-revised-datastores^.
 
 Specifically:
 
@@ -115,37 +108,33 @@ resources with the following exceptions:
 - ^RFC8040^, section 3.5.4, paragraph 3 does not apply when
   interacting with any resource under {+restconf}/ds.
 
-** The "with-origin" query parameter
+** New "with-origin" Query Parameter
 
-The GET operation adds a new query parameter named "with-origin",
-which if present, requests that the server includes "origin" metadata
-anotations in its response, as detailed in the NMDA.  This parameter
-is only valid when querying {+restconf}/ds/ietf-datastores:operational
-or any datastores with identities derived from the "operational"
-identity. Otherwise, if an invalid datastore is specified then the
-server MUST return a response witha a "400 Bad Request" status-line,
-using an error-tag value of "invalid-value".  "origin" metadata
-annotations are not included unless a client explicitly requests them.
+The a new query parameter named "with-origin" is added to the GET
+operation. If present, it wrequests that the server includes "origin"
+metadata anotations in its response, as detailed in the NMDA.  This
+parameter is only valid when querying
+{+restconf}/ds/ietf-datastores:operational or any datastores with
+identities derived from the "operational" identity. Otherwise, if an
+invalid datastore is specified then the server MUST return a response
+with a "400 Bad Request" status-line, using an error-tag value of
+"invalid-value".  "origin" metadata annotations are not included
+unless a client explicitly requests them.
 
 Data from <operational> can come from multiple sources.  The server
 should return the most accurate value for the "origin" metadata
 annotation as possible, indicating the source of the operational value,
-as specified in section 5.3.4 of the NMDA.
+as specified in section 5.3.4 of ^I-D.ietf-netmod-revised-datastores^.
 
 When encoding the origin metadata annotation for a hierarchy of
 returned nodes, the annotation may be omitted for a child node when
-the value matches that of the parent node (as described in
-ietf-origin@2017-08-17). [RFC Editor, please check published revision
-date.]
+the value matches that of the parent node, as described in
+"ietf-origin" YANG module ^I-D.ietf-netmod-revised-datastores^.
 
 The "with-origin" query parameter is optional to support.  It is
 identified with the URI:
 
   urn:ietf:params:restconf:capability:with-origin:1.0
-
-* Security Considerations
-
-TBD
 
 * IANA Considerations
 
@@ -157,13 +146,23 @@ registry defined in ^RFC8040^:
 
   :with-origin   urn:ietf:params:restconf:capability:with-origin:1.0
 
-*! start-appendix
+* Security Considerations
 
-* Example
+This documents extends the RESTCONF protocol by introducing new
+datastore resources. The lowest RESTCONF layer is HTTPS, and the
+mandatory-to-implement secure transport is TLS ^RFC5246^. The RESTCONF
+protocol uses the network configuration access control model
+^I-D.ietf-netconf-rfc6536bis^, which provides the means to restrict
+access for particular RESTCONF users to a preconfigured subset of all
+available RESTCONF protocol operations and content.
 
-TBD
+The security constraints for the base RESTCONF protocol (see Section
+12 of ^RFC8040^ apply to the new RESTCONF datastore resources defined
+in this document.
 
-
+# *! start-appendix
+#
+# * Examples
 
 {{document:
     name ;
@@ -171,7 +170,7 @@ TBD
     category std;
     references references.xml;
     updates 8040;
-    title "RESTCONF Update to Support the NMDA";
+    title "RESTCONF Update to Support the Network Management Datastore Architecture";
     contributor "author:Martin Bjorklund:Tail-f Systems:mbj@tail-f.com";
     contributor "author:Juergen Schoenwaelder:Jacobs University:j.schoenwaelder@jacobs-university.de";
     contributor "author:Phil Shafer:Juniper Networks:phil@juniper.net";
