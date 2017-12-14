@@ -1,12 +1,12 @@
-# draft-ietf-netconf-keystore
+# draft-ietf-netconf-nmda-restconf
 
 This repository is for the development of a IETF draft for the [NETCONF working group](http://datatracker.ietf.org/wg/netconf/charter/).
 
 ## Links
 
-* IETF Page: https://tools.ietf.org/html/draft-ietf-netconf-keystore
+* IETF Page: https://tools.ietf.org/html/draft-ietf-netconf-nmda-restconf
 * Mailing List: https://www.ietf.org/mailman/listinfo/netconf
-* Issue Tracking: https://github.com/netconf-wg/keystore/issues
+* Issue Tracking: https://github.com/netconf-wg/nmda-restconf/issues
 
 
 
