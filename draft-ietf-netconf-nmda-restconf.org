@@ -5,7 +5,7 @@
 The Network Management Datastore Architecture defines datastores are a
 fundamental concept binding the data models written in the YANG data
 modeling language to network management protocols.  This document
-updates the RESTCONF protocol defined in RFC 8040 in order to support
+extends the RESTCONF protocol defined in RFC 8040 in order to support
 the Network Management Datastore Architecture.
 
 * Introduction
@@ -37,7 +37,7 @@ datastore.  Such a server identifies that it supports NMDA both by
 implementing the {+restconf}/ds/ietf-datastores:operational resource,
 and by implementing at least revision 201X-XX-XX of the
 "ietf-yang-library" module, as specified in
-^I-D.nmdsdt-netconf-rfc7895bis^.
+^I-D.ietf-netconf-rfc7895bis^.
 
 A RESTCONF client can test if a server supports the NMDA by using
 either the HEAD or GET methods on
