@@ -54,7 +54,7 @@ are available using the following resource path template:
 The <datastore> path component is encoded as an "identity" according
 to the JSON encoding rules for identities, defined in Section 4 of
 ^RFC7951^.  Such an identity MUST be derived from the "datastore"
-identity defined in the ietf-datastores YANG module
+identity defined in the "ietf-datastores" YANG module
 ^I-D.ietf-netmod-revised-datastores^.
 
 Specifically:
@@ -106,9 +106,9 @@ resources with the following exceptions:
 
 ** New "with-origin" Query Parameter
 
-The a new query parameter named "with-origin" is added to the GET
-operation. If present, it wrequests that the server includes "origin"
-metadata anotations in its response, as detailed in the NMDA.  This
+The new query parameter named "with-origin" is added to the GET
+operation. If present, it requests that the server includes "origin"
+metadata annotations in its response, as detailed in the NMDA.  This
 parameter is only valid when querying
 {+restconf}/ds/ietf-datastores:operational or any datastores with
 identities derived from the "operational" identity. Otherwise, if an
