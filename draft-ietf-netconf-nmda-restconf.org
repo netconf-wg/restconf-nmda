@@ -2,7 +2,7 @@
 # NMDA Changes for RESTCONF
 #
 
-The Network Management Datastore Architecture defines datastores are a
+The Network Management Datastore Architecture defines datastores as a
 fundamental concept binding the data models written in the YANG data
 modeling language to network management protocols.  This document
 extends the RESTCONF protocol defined in RFC 8040 in order to support
