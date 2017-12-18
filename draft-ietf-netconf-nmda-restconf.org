@@ -171,7 +171,7 @@ in this document.
     category std;
     references references.xml;
     updates 8040;
-    title "RESTCONF Update to Support the Network Management Datastore Architecture";
+    title "RESTCONF Extensions to Support the Network Management Datastore Architecture";
     contributor "author:Martin Bjorklund:Tail-f Systems:mbj@tail-f.com";
     contributor "author:Juergen Schoenwaelder:Jacobs University:j.schoenwaelder@jacobs-university.de";
     contributor "author:Phil Shafer:Juniper Networks:phil@juniper.net";
