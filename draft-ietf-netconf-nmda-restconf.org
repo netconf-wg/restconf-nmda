@@ -9,7 +9,7 @@ extends the RESTCONF protocol, defined in RFC 8040, in order to
 support the Network Management Datastore Architecture. This document
 updates RFC 8040 by introducing new datastore resources, a new query
 parameter, and requiring the usage of ^I-D.ietf-netconf-rfc7895bis^
-for RESTCONF servers implementing the Network Management Datastore
+by RESTCONF servers implementing the Network Management Datastore
 Architecture.
 
 * Introduction
@@ -23,7 +23,7 @@ The solution presented in this document is backwards compatible with
 resources, and thereby leaving the semantics of all existing resources
 unchanged.
 
-* Terminology
+** Terminology
 
 This document uses the terminology defined by the NMDA
 ^I-D.ietf-netmod-revised-datastores^.
@@ -39,17 +39,23 @@ as shown here.
 RFC Ed.: Update 201X-XX-XX below with correct date.
 
 An NMDA-compliant RESTCONF server MUST support the operational state
-datastore.  Such a server identifies that it supports NMDA both by
+datastore and it MUST implement at least revision 201X-XX-XX of the
+"ietf-yang-library" module defined in ^I-D.ietf-netconf-rfc7895bis^.
+
+Such a server identifies that it supports NMDA both by
 implementing the {+restconf}/ds/ietf-datastores:operational resource,
 and by implementing at least revision 201X-XX-XX of the
-"ietf-yang-library" module, as specified in
-^I-D.ietf-netconf-rfc7895bis^.
+"ietf-yang-library" module.
 
 A RESTCONF client can test if a server supports the NMDA by using
 either the HEAD or GET methods on
 {+restconf}/ds/ietf-datastores:operational.
 
-* New Datastore Resources
+* RESTCONF Support for NMDA
+
+This section describes the RESTCONF changes needed to support NMDA.
+
+** New Datastore Resources
 
 This document defines a set of new resources representing datastores
 as defined in ^I-D.ietf-netmod-revised-datastores^.  These resources
@@ -83,15 +89,15 @@ If a server implements the example datastore "ds-ephemeral" in
 the module "example-ds-ephemeral", it would implement the resource
 {+restconf}/ds/example-ds-ephemeral:ds-ephemeral.
 
-* Protocol Operations
+** Protocol Operations
 
 All existing protocol operations defined in ^RFC8040^ for the
 {+restconf}/data resource are available for all of the new datastore
 resources with the following exceptions:
 
-- Dynamic datastores are excluded, as each dynamic datastore
-  definition needs to be reviewed for what protocol operations it
-  supports.
+- Dynamic configuration datastores are excluded, as each dynamic
+  configuration datastore definition needs to be reviewed for what
+  protocol operations it supports.
 
 - Some datastores are read-only by nature (e.g., <intended>), and
   hence any attempt to modify these datastores will fail.
@@ -110,7 +116,7 @@ resources with the following exceptions:
 - ^RFC8040^, section 3.5.4, paragraph 3 does not apply when
   interacting with any resource under {+restconf}/ds.
 
-** New "with-origin" Query Parameter
+*** New "with-origin" Query Parameter
 
 The new query parameter named "with-origin" is added to the GET
 operation. If present, it requests that the server includes "origin"
@@ -123,10 +129,11 @@ with a "400 Bad Request" status-line, using an error-tag value of
 "invalid-value".  "origin" metadata annotations are not included
 unless a client explicitly requests them.
 
-Data from <operational> can come from multiple sources.  The server
-should return the most accurate value for the "origin" metadata
-annotation as possible, indicating the source of the operational value,
-as specified in section 5.3.4 of ^I-D.ietf-netmod-revised-datastores^.
+Data in the operational state datatstore can come from multiple
+sources.  The server should return the most accurate value for the
+"origin" metadata annotation as possible, indicating the source of the
+operational value, as specified in section 5.3.4 of
+^I-D.ietf-netmod-revised-datastores^.
 
 When encoding the origin metadata annotation for a hierarchy of
 returned nodes, the annotation may be omitted for a child node when
