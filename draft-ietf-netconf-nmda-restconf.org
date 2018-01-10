@@ -19,8 +19,8 @@ order to support the Network Management Datastore Architecture (NMDA)
 defined in ^I-D.ietf-netmod-revised-datastores^.
 
 The solution presented in this document is backwards compatible with
-^RFC8040^.  This is achieved by it only adding new top-level
-resources, and thereby leaving the semantics of all existing resources
+^RFC8040^.  This is achieved by it only adding a new top-level API
+resource, thereby leaving the semantics of the existing API resources
 unchanged.
 
 ** Terminology
