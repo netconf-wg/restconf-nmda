@@ -55,7 +55,7 @@ either the HEAD or GET methods on
 
 This section describes the RESTCONF changes needed to support NMDA.
 
-** New Datastore Resources
+** New Datastore Resources @new-ds-resources@
 
 This document defines a set of new resources representing datastores
 as defined in ^I-D.ietf-netmod-revised-datastores^.  These resources
@@ -91,10 +91,13 @@ the module "example-ds-ephemeral", it would implement the resource
 
 ** Protocol Operations
 
-All existing protocol operations defined in ^RFC8040^ for the
-{+restconf}/data resource are available for all of the new datastore
-resources with the following exceptions:
+The protocol operations available for the new datastore resources
+(^new-ds-resources^) are the same as the protocol operations
+defined in ^RFC8040^ for the {+restconf}/data resource with the
+following exceptions:
 
+# is the following needed, since revised-datastores does not define
+# any dynamic datastores?
 - Dynamic configuration datastores are excluded, as each dynamic
   configuration datastore definition needs to be reviewed for what
   protocol operations it supports.
