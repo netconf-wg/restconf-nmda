@@ -2,25 +2,36 @@
 # NMDA Changes for RESTCONF
 #
 
-The Network Management Datastore Architecture defines datastores as a
-fundamental concept binding the data models written in the YANG data
-modeling language to network management protocols.  This document
-extends the RESTCONF protocol, defined in RFC 8040, in order to
-support the Network Management Datastore Architecture. This document
-updates RFC 8040 by introducing new datastore resources, a new query
-parameter, and requiring the usage of ^I-D.ietf-netconf-rfc7895bis^
-by RESTCONF servers implementing the Network Management Datastore
-Architecture.
+This document extends the RESTCONF protocol defined in RFC 8040 in
+order to support the Network Management Datastore Architecture
+defined in I-D.ietf-netmod-revised-datastores.
+
+This document updates RFC 8040 by introducing new datastore
+resources, adding a new query parameter, and requiring the usage of
+[I-D.ietf-netconf-rfc7895bis] by RESTCONF servers implementing
+the Network Management Datastore Architecture..
+
+REF Editor: please replace "I-D.ietf-netmod-revised-datastores" and
+"I-D.ietf-netconf-rfc7895bis" above with theie final RFC assignments.
 
 * Introduction
 
-This document updates the RESTCONF protocol defined in ^RFC8040^ in
+This document extends the RESTCONF protocol defined in ^RFC8040^ in
 order to support the Network Management Datastore Architecture (NMDA)
 defined in ^I-D.ietf-netmod-revised-datastores^.
 
+This document updates ^RFC8040^ in order to enable RESTCONF clients
+to discover which datastores are supported by the RESTCONF server,
+as well as determine which modules are supported in each datastore
+and, finally, to interact with all the datastores supported by the
+NMDA.  Specifically, the update introduces new datastore resources,
+adds a new query parameter, and requires the usage of
+^I-D.ietf-netconf-rfc7895bis^ by RESTCONF servers implementing
+the NMDA.
+
 The solution presented in this document is backwards compatible with
 ^RFC8040^.  This is achieved by it only adding new resources, and
-thereby leaving the semantics of all existing resources unchanged.
+thereby leaving the semantics of the existing resources unchanged.
 
 ** Terminology
 
