@@ -52,7 +52,7 @@ An NMDA-compliant RESTCONF server MUST support the operational state
 datastore and it MUST implement at least revision 201X-XX-XX of the
 "ietf-yang-library" module defined in ^I-D.ietf-netconf-rfc7895bis^.
 
-Such a server identifies that it supports NMDA both by
+Such a server identifies that it supports the NMDA both by
 implementing the {+restconf}/ds/ietf-datastores:operational resource,
 and by implementing at least revision 201X-XX-XX of the
 "ietf-yang-library" module.
@@ -61,9 +61,9 @@ A RESTCONF client can test if a server supports the NMDA by using
 either the HEAD or GET methods on
 {+restconf}/ds/ietf-datastores:operational.
 
-* RESTCONF Support for NMDA
+* RESTCONF Support for the NMDA
 
-This section describes the RESTCONF changes needed to support NMDA.
+This section describes the RESTCONF changes needed to support the NMDA.
 
 ** New Datastore Resources @new-ds-resources@
 
