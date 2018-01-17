@@ -61,9 +61,10 @@ A RESTCONF client can test if a server supports the NMDA by using
 either the HEAD or GET methods on
 {+restconf}/ds/ietf-datastores:operational.
 
-* RESTCONF Support for the NMDA
+* RESTCONF Extensions
 
-This section describes the RESTCONF changes needed to support the NMDA.
+This section describes the RESTCONF extensions needed to support the
+NMDA.
 
 ** New Datastore Resources @new-ds-resources@
 
