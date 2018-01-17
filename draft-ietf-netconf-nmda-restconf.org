@@ -8,11 +8,11 @@ defined in I-D.ietf-netmod-revised-datastores.
 
 This document updates RFC 8040 by introducing new datastore
 resources, adding a new query parameter, and requiring the usage of
-[I-D.ietf-netconf-rfc7895bis] by RESTCONF servers implementing
-the Network Management Datastore Architecture..
+I-D.ietf-netconf-rfc7895bis by RESTCONF servers implementing
+the Network Management Datastore Architecture.
 
 REF Editor: please replace "I-D.ietf-netmod-revised-datastores" and
-"I-D.ietf-netconf-rfc7895bis" above with theie final RFC assignments.
+"I-D.ietf-netconf-rfc7895bis" above with their final RFC assignments.
 
 * Introduction
 
@@ -30,8 +30,8 @@ adds a new query parameter, and requires the usage of
 the NMDA.
 
 The solution presented in this document is backwards compatible with
-^RFC8040^.  This is achieved by it only adding new resources, and
-thereby leaving the semantics of the existing resources unchanged.
+^RFC8040^.  This is achieved by only adding new resources and
+leaving the semantics of the existing resources unchanged.
 
 ** Terminology
 
@@ -126,7 +126,7 @@ following exceptions:
   status-line.  The error-tag value "invalid-value" is used in this
   case.
 
-- ^RFC8040^, section 3.5.4, paragraph 3 does not apply when
+- ^RFC8040^, Section 3.5.4, paragraph 3 does not apply when
   interacting with any resource under {+restconf}/ds.
 
 *** New "with-origin" Query Parameter
@@ -145,7 +145,7 @@ unless a client explicitly requests them.
 Data in the operational state datatstore can come from multiple
 sources.  The server should return the most accurate value for the
 "origin" metadata annotation as possible, indicating the source of the
-operational value, as specified in section 5.3.4 of
+operational value, as specified in Section 5.3.4 of
 ^I-D.ietf-netmod-revised-datastores^.
 
 When encoding the origin metadata annotation for a hierarchy of
