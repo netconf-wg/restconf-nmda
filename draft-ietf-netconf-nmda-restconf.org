@@ -113,14 +113,17 @@ following exceptions:
   protocol operations it supports.
 
 - Some datastores are read-only by nature (e.g., <intended>), and
-  hence any attempt to modify these datastores will fail.
+  hence any attempt to modify these datastores will fail.  A server
+  MUST return a response with a "405 Method Not Allowed" status-line,
+  and error-tag value "operation-not-supported".
 
 - The "with-defaults" query parameter (^RFC8040^, Section 4.8.9) does
   not apply when interacting with
-  {+restconf}/ds/ietf-datastores:operational.  This means that all
-  values are always returned from the operational state datastore,
-  even if a node happens to have a default statement in the YANG
-  module, and this default value is being used by the server. If the
+  {+restconf}/ds/ietf-datastores:operational.  This means that all "in
+  use" values, as defined in ^I-D.ietf-netmod-revised-datastores^
+  section 5.3, are returned for the operational state datastore, even
+  if a node happens to have a default statement in the YANG module,
+  and this default value is being used by the server. If the
   "with-defaults" query parameter is present in a request to this
   resource, the server MUST return a response with a "400 Bad Request"
   status-line.  The error-tag value "invalid-value" is used in this
@@ -131,7 +134,7 @@ following exceptions:
 
 *** New "with-origin" Query Parameter
 
-The new query parameter named "with-origin" is added to the GET
+A new query parameter named "with-origin" is added to the GET
 operation. If present, it requests that the server includes "origin"
 metadata annotations in its response, as detailed in the NMDA.  This
 parameter is only valid when querying
@@ -149,7 +152,7 @@ operational value, as specified in Section 5.3.4 of
 ^I-D.ietf-netmod-revised-datastores^.
 
 When encoding the origin metadata annotation for a hierarchy of
-returned nodes, the annotation may be omitted for a child node when
+returned nodes, the annotation can be omitted for a child node when
 the value matches that of the parent node, as described in
 "ietf-origin" YANG module ^I-D.ietf-netmod-revised-datastores^.
 
