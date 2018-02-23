@@ -118,20 +118,44 @@ following exceptions:
   MUST return a response with a "405 Method Not Allowed" status-line,
   and error-tag value "operation-not-supported".
 
-- The "with-defaults" query parameter (^RFC8040^, Section 4.8.9) does
-  not apply when interacting with
-  {+restconf}/ds/ietf-datastores:operational.  This means that all "in
-  use" values, as defined in ^I-D.ietf-netmod-revised-datastores^
-  section 5.3, are returned for the operational state datastore, even
-  if a node happens to have a default statement in the YANG module,
-  and this default value is being used by the server. If the
-  "with-defaults" query parameter is present in a request to this
-  resource, the server MUST return a response with a "400 Bad Request"
-  status-line.  The error-tag value "invalid-value" is used in this
-  case.
+- The semantics of the "with-defaults" query parameter (^RFC8040^,
+  Section 4.8.9) differs when interacting with the operational state
+  datastore.  The semantics are described below, in ^with-defaults^.
 
 - ^RFC8040^, Section 3.5.4, paragraph 3 does not apply when
   interacting with any resource under {+restconf}/ds.
+
+*** With-defaults query parameter on the operational state datastore @with-defaults@
+
+The "with-defaults" query parameter (^RFC8040^, Section 4.8.9) is
+optional to support when interacting with
+{+restconf}/ds/ietf-datastores:operational.  The associated capability
+to indicate a server's support is identified with the URI:
+
+  urn:ietf:params:restconf:capability:with-operational-defaults:1.0
+
+For servers that support it, the behavior of the "with-defaults" query
+parameter on the operational state datastore is defined as follows:
+
+- If no "with-defaults" query parameter is specified, or if it is set
+  to "explicit", "report-all", or "report-all-tagged", then the "in
+  use" values, as defined in ^I-D.ietf-netmod-revised-datastores^
+  section 5.3, are returned from the operational state datastore, even
+  if a node happens to have a default statement in the YANG module,
+  and this default value is being used by the server.  If the
+  "with-defaults" parameter is set to "report-all-tagged", any values
+  that match the schema default are tagged with additional metadata,
+  as described in ^RFC8040^, Section 4.8.9.
+
+- If the "with-defaults" query parameter is set to "trim", all "in
+  use" values are returned, except that the output is filtered to
+  exclude any values that match the default defined in the YANG
+  schema.
+
+Servers are not required to support all values in the "with-defaults"
+query parameter on the operational state datastore.  If a request is
+made using a value that is not supported, then the error handling
+behavior is as described in (^RFC8040^, Section 4.8.9).
 
 *** New "with-origin" Query Parameter
 
@@ -164,13 +188,18 @@ identified with the URI:
 
 * IANA Considerations
 
-This document defines one capability in the "RESTCONF Capability URNs"
-registry defined in ^RFC8040^:
+This document defines two capability identifier URNs in the "RESTCONF
+Capability URNs" registry defined in ^RFC8040^:
 
-  Index          Capability Identifier
-  ------------------------------------------------------------------
+  Index          
+  Capability Identifier
+  ---------------------
 
-  :with-origin   urn:ietf:params:restconf:capability:with-origin:1.0
+  :with-origin
+  urn:ietf:params:restconf:capability:with-origin:1.0
+
+  :with-operational-defaults
+  urn:ietf:params:restconf:capability:with-operational-defaults:1.0
 
 * Security Considerations
 
