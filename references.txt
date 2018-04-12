@@ -5,7 +5,7 @@
     ietf-ref RFC7951;
     ietf-ref RFC8040;
     ietf-ref RFC8174;
-    ietf-ref I-D.ietf-netmod-revised-datastores;
+    ietf-ref RFC8341;
+    ietf-ref RFC8342;
     ietf-ref I-D.ietf-netconf-rfc7895bis;
-    ietf-ref I-D.ietf-netconf-rfc6536bis;
 }}

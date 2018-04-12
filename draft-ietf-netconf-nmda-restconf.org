@@ -4,26 +4,26 @@
 
 This document extends the RESTCONF protocol defined in RFC 8040 in
 order to support the Network Management Datastore Architecture
-defined in I-D.ietf-netmod-revised-datastores.
+defined in RFC 8342.
 
 This document updates RFC 8040 by introducing new datastore
 resources, adding a new query parameter, and requiring the usage of
 I-D.ietf-netconf-rfc7895bis by RESTCONF servers implementing
 the Network Management Datastore Architecture.
 
-REF Editor: please replace "I-D.ietf-netmod-revised-datastores" and
-"I-D.ietf-netconf-rfc7895bis" above with their final RFC assignments.
+RFC Ed.: Please replace "I-D.ietf-netconf-rfc7895bis" above with
+its final RFC assignment and remove this note.
 
 * Introduction
 
 This document extends the RESTCONF protocol defined in ^RFC8040^ in
 order to support the Network Management Datastore Architecture (NMDA)
-defined in ^I-D.ietf-netmod-revised-datastores^.
+defined in ^RFC8342^.
 
 This document updates ^RFC8040^ in order to enable RESTCONF clients
 to discover which datastores are supported by the RESTCONF server,
-as well as determine which modules are supported in each datastore
-and, finally, to interact with all the datastores supported by the
+determine which modules are supported in each datastore,
+and to interact with all the datastores supported by the
 NMDA.  Specifically, the update introduces new datastore resources,
 adds a new query parameter, and requires the usage of
 ^I-D.ietf-netconf-rfc7895bis^ by RESTCONF servers implementing
@@ -36,7 +36,7 @@ leaving the semantics of the existing resources unchanged.
 ** Terminology
 
 This document uses the terminology defined by the NMDA
-^I-D.ietf-netmod-revised-datastores^.
+^RFC8342^.
 
 The keywords "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
 "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
@@ -46,7 +46,8 @@ as shown here.
 
 * Datastore and YANG Library Requirements
 
-RFC Ed.: Update 201X-XX-XX below with correct date.
+RFC Ed.: Please update 201X-XX-XX below with correct date and remove
+this note.
 
 An NMDA-compliant RESTCONF server MUST support the operational state
 datastore and it MUST implement at least revision 201X-XX-XX of the
@@ -61,6 +62,10 @@ A RESTCONF client can test if a server supports the NMDA by using
 either the HEAD or GET methods on
 {+restconf}/ds/ietf-datastores:operational.
 
+A RESTCONF client can discover which datastores and YANG modules the
+server supports by reading the YANG library information from the
+operational state datastore.
+
 * RESTCONF Extensions
 
 This section describes the RESTCONF extensions needed to support the
@@ -69,7 +74,7 @@ NMDA.
 ** New Datastore Resources @new-ds-resources@
 
 This document defines a set of new resources representing datastores
-as defined in ^I-D.ietf-netmod-revised-datastores^.  These resources
+as defined in ^RFC8342^.  These resources
 are available using the following resource path template:
 
   {+restconf}/ds/<datastore>
@@ -78,7 +83,7 @@ The <datastore> path component is encoded as an "identity" according
 to the JSON encoding rules for identities, defined in Section 4 of
 ^RFC7951^.  Such an identity MUST be derived from the "datastore"
 identity defined in the "ietf-datastores" YANG module
-^I-D.ietf-netmod-revised-datastores^.
+^RFC8342^.
 
 Specifically:
 
@@ -115,7 +120,7 @@ following exceptions:
 
 - Some datastores are read-only by nature (e.g., <intended>), and
   hence any attempt to modify these datastores will fail.  A server
-  MUST return a response with a "405 Method Not Allowed" status-line,
+  MUST return a response with a "405 Method Not Allowed" status-line
   and error-tag value "operation-not-supported".
 
 - The semantics of the "with-defaults" query parameter (^RFC8040^,
@@ -139,9 +144,9 @@ parameter on the operational state datastore is defined as follows:
 
 - If no "with-defaults" query parameter is specified, or if it is set
   to "explicit", "report-all", or "report-all-tagged", then the "in
-  use" values, as defined in ^I-D.ietf-netmod-revised-datastores^
+  use" values, as defined in ^RFC8342^
   section 5.3, are returned from the operational state datastore, even
-  if a node happens to have a default statement in the YANG module,
+  if a node happens to have a default statement in the YANG module
   and this default value is being used by the server.  If the
   "with-defaults" parameter is set to "report-all-tagged", any values
   that match the schema default are tagged with additional metadata,
@@ -174,12 +179,12 @@ Data in the operational state datatstore can come from multiple
 sources.  The server should return the most accurate value for the
 "origin" metadata annotation as possible, indicating the source of the
 operational value, as specified in Section 5.3.4 of
-^I-D.ietf-netmod-revised-datastores^.
+^RFC8342^.
 
 When encoding the origin metadata annotation for a hierarchy of
 returned nodes, the annotation can be omitted for a child node when
 the value matches that of the parent node, as described in
-"ietf-origin" YANG module ^I-D.ietf-netmod-revised-datastores^.
+"ietf-origin" YANG module ^RFC8342^.
 
 The "with-origin" query parameter is optional to support.  It is
 identified with the URI:
@@ -207,7 +212,7 @@ This documents extends the RESTCONF protocol by introducing new
 datastore resources. The lowest RESTCONF layer is HTTPS, and the
 mandatory-to-implement secure transport is TLS ^RFC5246^. The RESTCONF
 protocol uses the network configuration access control model
-^I-D.ietf-netconf-rfc6536bis^, which provides the means to restrict
+^RFC8341^, which provides the means to restrict
 access for particular RESTCONF users to a preconfigured subset of all
 available RESTCONF protocol operations and content.
 
