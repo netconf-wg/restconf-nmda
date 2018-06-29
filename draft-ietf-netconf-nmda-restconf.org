@@ -217,7 +217,7 @@ access for particular RESTCONF users to a preconfigured subset of all
 available RESTCONF protocol operations and content.
 
 The security constraints for the base RESTCONF protocol (see Section
-12 of ^RFC8040^ apply to the new RESTCONF datastore resources defined
+12 of ^RFC8040^) apply to the new RESTCONF datastore resources defined
 in this document.
 
 # *! start-appendix
