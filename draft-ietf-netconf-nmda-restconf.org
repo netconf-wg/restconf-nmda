@@ -96,7 +96,7 @@ Specifically:
 
 An NMDA-compliant server MUST implement
 {+restconf}/ds/ietf-datastores:operational.  Other datastore resources
-are optional to implement.
+are MAY be implemented.
 
 YANG actions can only be invoked in
 {+restconf}/ds/ietf-datastores:operational.
@@ -133,7 +133,7 @@ following exceptions:
 *** With-defaults query parameter on the operational state datastore @with-defaults@
 
 The "with-defaults" query parameter (^RFC8040^, Section 4.8.9) is
-optional to support when interacting with
+OPTIONAL to support when interacting with
 {+restconf}/ds/ietf-datastores:operational.  The associated capability
 to indicate a server's support is identified with the URI:
 
@@ -186,7 +186,7 @@ returned nodes, the annotation can be omitted for a child node when
 the value matches that of the parent node, as described in
 "ietf-origin" YANG module ^RFC8342^.
 
-The "with-origin" query parameter is optional to support.  It is
+The "with-origin" query parameter is OPTIONAL to support.  It is
 identified with the URI:
 
   urn:ietf:params:restconf:capability:with-origin:1.0
@@ -196,7 +196,7 @@ identified with the URI:
 This document defines two capability identifier URNs in the "RESTCONF
 Capability URNs" registry defined in ^RFC8040^:
 
-  Index          
+  Index
   Capability Identifier
   ---------------------
 
