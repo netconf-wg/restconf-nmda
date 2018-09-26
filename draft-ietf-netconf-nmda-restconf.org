@@ -96,7 +96,7 @@ Specifically:
 
 An NMDA-compliant server MUST implement
 {+restconf}/ds/ietf-datastores:operational.  Other datastore resources
-are MAY be implemented.
+MAY be implemented.
 
 YANG actions can only be invoked in
 {+restconf}/ds/ietf-datastores:operational.
