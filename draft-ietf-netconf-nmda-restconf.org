@@ -79,11 +79,11 @@ are available using the following resource path template:
 
   {+restconf}/ds/<datastore>
 
-The <datastore> path component is encoded as an "identity" according
-to the JSON encoding rules for identities, defined in Section 4 of
-^RFC7951^.  Such an identity MUST be derived from the "datastore"
-identity defined in the "ietf-datastores" YANG module
-^RFC8342^.
+The <datastore> path component is encoded as an "identityref"
+according to the JSON encoding rules for identities, defined in
+Section 6.8 of ^RFC7951^.  The namespace-qualified form MUST be used.
+Such an identity MUST be derived from the "datastore" identity defined
+in the "ietf-datastores" YANG module ^RFC8342^.
 
 Specifically:
 
@@ -208,9 +208,9 @@ Capability URNs" registry defined in ^RFC8040^:
 
 * Security Considerations
 
-This documents extends the RESTCONF protocol by introducing new
+This document extends the RESTCONF protocol by introducing new
 datastore resources. The lowest RESTCONF layer is HTTPS, and the
-mandatory-to-implement secure transport is TLS ^RFC5246^. The RESTCONF
+mandatory-to-implement secure transport is TLS ^RFC8446^. The RESTCONF
 protocol uses the network configuration access control model
 ^RFC8341^, which provides the means to restrict
 access for particular RESTCONF users to a preconfigured subset of all
