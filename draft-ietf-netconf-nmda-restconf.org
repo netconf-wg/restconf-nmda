@@ -101,9 +101,10 @@ MAY be implemented.
 YANG actions can only be invoked in
 {+restconf}/ds/ietf-datastores:operational.
 
-If a server implements the example datastore "ds-ephemeral" in
-the module "example-ds-ephemeral", it would implement the resource
-{+restconf}/ds/example-ds-ephemeral:ds-ephemeral.
+If a server implements other datastores, such as the example
+datastore "ds-ephemeral" in the module "example-ds-ephemeral",
+the server would implement the resource {+restconf}/ds/example-
+ds-ephemeral:ds-ephemeral.
 
 ** Protocol Operations
 
